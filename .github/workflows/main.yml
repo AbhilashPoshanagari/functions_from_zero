@@ -1,0 +1,43 @@
+name: Python CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'  # Use the latest Python version (adjust as needed)
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          make install
+
+      # Step 4: Lint code with Pylint
+      - name: Lint with Pylint
+        run: |
+          make lint
+
+      # Step 5: Run tests with Pytest
+      - name: Test with Pytest
+        run: |
+          make test
+
+      # Step 6: Format code with Black
+      - name: Format code with Black
+        run: |
+          make format
