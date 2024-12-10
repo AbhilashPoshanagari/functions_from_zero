@@ -9,8 +9,8 @@ def add(x, y):
     return x+y
 
 # this is a bad code example
-var = 1
-var = var
+# var = 1
+# var = var
 
 # syntax
 # foo =
