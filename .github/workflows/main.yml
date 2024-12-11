@@ -46,6 +46,8 @@ jobs:
       - name: Log in to AWS ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
+        with:
+          mask-password: 'false'
         
       # Step 8: Set up Docker build and tag
       - name: Build Docker image
