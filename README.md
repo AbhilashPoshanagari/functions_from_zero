@@ -14,4 +14,3 @@ curl -X 'POST' \
 
 ## run docker image
 `docker run localhost:8080:8080 image_Id`
-test
