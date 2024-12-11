@@ -41,3 +41,23 @@ jobs:
       - name: Format code with Black
         run: |
           make format
+          
+      # Step 7: Log in to AWS ECR
+      - name: Log in to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+        
+      # Step 8: Set up Docker build and tag
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ secrets.ECR_REPOSITORY_NAME }}:latest .
+          docker tag ${{ secrets.ECR_REPOSITORY_NAME }}:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+
+      # Step 4: Push Docker image to AWS ECR
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+
+      # Step 5: Post-deployment (optional)
+      - name: Deployment Success Notification
+        run: echo "Docker image successfully deployed to AWS ECR!"
